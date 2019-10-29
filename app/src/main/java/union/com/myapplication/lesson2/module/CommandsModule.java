@@ -6,11 +6,19 @@ import dagger.multibindings.IntoMap;
 import dagger.multibindings.StringKey;
 import union.com.myapplication.lesson2.Command;
 import union.com.myapplication.lesson2.HelloWorldCommand;
+import union.com.myapplication.lesson2.LoginCommand;
 
 @Module
-public abstract class HelloWorldModule {
+public interface CommandsModule {
+
     @Binds
     @IntoMap
     @StringKey("hello")
-    abstract Command helloWorldCommand(HelloWorldCommand command);
+    Command helloWorld(HelloWorldCommand command);
+
+    @Binds
+    @IntoMap
+    @StringKey("login")
+    Command login(LoginCommand command);
+
 }

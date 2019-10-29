@@ -12,11 +12,11 @@ import javax.inject.Inject;
 public class CommandRouter {
 
 
-    private final Map<String, Command> commands = Collections.emptyMap();
+    private final Map<String, Command> commands;
 
     @Inject
-    public CommandRouter(Command command){
-        commands.put(command.key(),command);
+    public CommandRouter(Map<String, Command> commands){
+        this.commands = commands;
     }
 
     Command.Result route(String input) {
