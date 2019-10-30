@@ -1,5 +1,6 @@
 package union.com.myapplication.lesson2;
 
+import java.util.AbstractSequentialList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,17 +10,16 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-public class CommandRouter {
+public final class CommandRouter {
+    private Map<String, Command> commands = Collections.emptyMap();
 
-
-    private final Map<String, Command> commands;
 
     @Inject
     public CommandRouter(Map<String, Command> commands){
         this.commands = commands;
     }
 
-    Command.Result route(String input) {
+    public Command.Status route(String input) {
         List<String> splitInput = split(input);
         if (splitInput.isEmpty()) {
             return invalidCommand(input);
@@ -31,17 +31,21 @@ public class CommandRouter {
             return invalidCommand(input);
         }
 
-        List<String> args = splitInput.subList(1, splitInput.size());
-        Command.Result result = command.handleInput(args);
-        return result.status().equals(Command.Status.INVALID) ? invalidCommand(input) : result;
+        Command.Status status =
+                command.handleInput(splitInput.subList(1, splitInput.size()));
+        if (status == Command.Status.INVALID) {
+            System.out.println(commandKey + ": invalid arguments");
+        }
+        return status;
     }
 
-    private Command.Result invalidCommand(String input) {
+    private Command.Status invalidCommand(String input) {
         System.out.println(
                 String.format("couldn't understand \"%s\". please try again.", input));
-        return Command.Result.invalid();
+        return Command.Status.INVALID;
     }
 
+    // Split on whitespace
     private static List<String> split(String input) {
         return Arrays.asList(input.trim().split("\\s+"));
     }
