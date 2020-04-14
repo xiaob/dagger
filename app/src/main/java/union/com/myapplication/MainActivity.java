@@ -5,15 +5,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import java.util.Map;
 
+import javax.inject.Singleton;
+
 import union.com.myapplication.lesson5.service.IBuy;
 import union.com.myapplication.lesson5.commponent.DaggerBuyThing;
-import union.com.myapplication.lesson5.User;
+import union.com.myapplication.lesson6.client.User;
+import union.com.myapplication.lesson6.component.CommandComponent;
+import union.com.myapplication.lesson6.component.DaggerCommandComponent;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,8 +31,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        User user = DaggerBuyThing.create().buy();
-        Map<String, IBuy> buyMap = user.getBuyMap();
+        // lesson5 调用示例
+//        User user = DaggerBuyThing.create().buy();
+//        Map<String, IBuy> buyMap = user.getBuyMap();
+
+        //lesson6 调用示例
+        CommandComponent factort = DaggerCommandComponent.create();
+        User user1 = factort.getUser();
+        User user2 = factort.getUser();
+        Log.i("grade","user1 = "+user1);
+        Log.i("grade","user2 = "+user2);
 
     }
 
