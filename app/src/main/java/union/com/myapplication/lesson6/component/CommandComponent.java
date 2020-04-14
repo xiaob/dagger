@@ -7,7 +7,7 @@ import union.com.myapplication.lesson6.client.User;
 import union.com.myapplication.lesson6.module.CommandModule;
 
 
-
+@Singleton
 @Component(modules = CommandModule.class)
 public interface CommandComponent {
     User getUser();

@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 import union.com.myapplication.lesson6.service.ICommand;
 
 
+@Singleton
 public class User {
 
     ICommand iCommand;
